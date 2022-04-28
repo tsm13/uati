@@ -2,7 +2,7 @@ package br.com.uati.api.params;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ExtratoESaldoParams {
+public class ExtratoESaldoParams implements Params {
 
 	@JsonProperty("agencia")
 	private String agencia;
