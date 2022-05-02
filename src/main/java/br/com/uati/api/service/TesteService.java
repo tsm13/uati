@@ -8,5 +8,10 @@ public interface TesteService {
 	
 	public APIDto getSaldo(ExtratoESaldoParams params) throws Exception;
 	public APIDto getExtrato(ExtratoESaldoParams params) throws Exception;
-	public APIDto getContaCorrente(ContaCorrenteParams params) throws Exception;	
+	public APIDto getExtratoFuturo(ExtratoESaldoParams params) throws Exception;
+	public APIDto getContaCorrente(ContaCorrenteParams params) throws Exception;
+	
+	
+	// teste
+	APIDto getExtratoFuturoTeste(ExtratoESaldoParams params) throws Exception;
 }

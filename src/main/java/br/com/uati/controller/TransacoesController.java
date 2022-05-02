@@ -38,6 +38,20 @@ public class TransacoesController {
 		return ResponseEntity.ok().body(ClienteModelMapper.fromExtratoDto(service.getExtrato(params)));
 	}
 	
+	// Extrato Entradas Futuras
+	@ResponseBody
+	@PostMapping("/extratoEntradasFuturas")
+	public ResponseEntity<ViewEntidade> getExtratoEntradas (@RequestBody ExtratoESaldoParams params) throws Exception {
+		return ResponseEntity.ok().body(ClienteModelMapper.fromExtratoEntradasFuturasDto(service.getExtratoFuturo(params)));
+	}
+	
+	// Extrato Entradas teste
+	@ResponseBody
+	@PostMapping("/extratoEntradasFuturasTeste")
+	public ResponseEntity<ViewEntidade> getExtratoEntradasTeste (@RequestBody ExtratoESaldoParams params) throws Exception {
+		return ResponseEntity.ok().body(ClienteModelMapper.fromExtratoEntradasFuturasDtoTeste(service.getExtratoFuturoTeste(params)));
+	}
+	
 	// CC
 	@ResponseBody
 	@PostMapping("/cc")

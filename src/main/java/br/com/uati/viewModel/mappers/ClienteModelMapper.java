@@ -2,22 +2,25 @@ package br.com.uati.viewModel.mappers;
 
 import br.com.uati.api.model.APIDto;
 import br.com.uati.api.model.ContaCorrenteDTO;
+import br.com.uati.api.model.DadosFuturosDTO;
 import br.com.uati.api.model.ExtratoDTO;
+import br.com.uati.api.model.ExtratosFuturosDTO;
 import br.com.uati.api.model.SaldoDTO;
+import br.com.uati.api.model.StatusLancamento;
 import br.com.uati.viewModel.model.ContaCorrenteView;
+import br.com.uati.viewModel.model.DadosFuturosView;
 import br.com.uati.viewModel.model.ExtratoView;
+import br.com.uati.viewModel.model.ExtratosFuturosView;
 import br.com.uati.viewModel.model.SaldoView;
 
 public class ClienteModelMapper {
-	
-	// Aqui é onde são feitas as conversões e formatações
 
 	private ClienteModelMapper() {
 	}
-	
-	public static SaldoView fromSaldoDto (APIDto dto) {
+
+	public static SaldoView fromSaldoDto(APIDto dto) {
 		if (dto != null) {
-			SaldoDTO saldoDTO =  (SaldoDTO) dto;
+			SaldoDTO saldoDTO = (SaldoDTO) dto;
 			SaldoView saldoViewModel = new SaldoView();
 			saldoViewModel.setSaldo(saldoDTO.getSaldo());
 			saldoViewModel.setLis(saldoDTO.getLis());
@@ -26,16 +29,51 @@ public class ClienteModelMapper {
 		}
 		return null;
 	}
-	
-	public static ExtratoView fromExtratoDto (APIDto dto) {
+
+	public static ExtratoView fromExtratoDto(APIDto dto) {
 		if (dto != null) {
 			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();	
-			extratoViewModel.setDados(extratoDTO.getDados());
+			ExtratoView extratoViewModel = new ExtratoView();
+			extratoViewModel.setDados(extratoDTO.getDados());	
 			return extratoViewModel;
 		}
 		return null;
 	}
+	
+	public static ExtratosFuturosView fromExtratoEntradasFuturasDto(APIDto dto) {
+		if (dto != null) {
+			ExtratosFuturosDTO extratoDTO = (ExtratosFuturosDTO) dto;
+			ExtratosFuturosView extratoViewModel = new ExtratosFuturosView();
+			extratoViewModel.setDados(extratoDTO.getDados());	
+			
+			return extratoViewModel;
+		}
+		return null;
+	}
+	
+	public static DadosFuturosView fromExtratoEntradasFuturasDtoTeste(APIDto dto) {
+		if (dto != null) {
+			DadosFuturosDTO extratoDTO = (DadosFuturosDTO) dto;
+			DadosFuturosView extratoViewModel = new DadosFuturosView();
+			extratoViewModel.setDados(extratoDTO.getDados());
+			
+			if (extratoViewModel.getEhFuturo() == StatusLancamento.FUTURO) {
+
+				return extratoViewModel;
+			}
+			
+//			extratoViewModel.setDataLancamento(extratoDTO.getDataLancamento());
+//			extratoViewModel.setDetalhes(extratoDTO.getDetalhes());
+//			extratoViewModel.setEhFuturo(extratoDTO.getEhFuturo());
+//			extratoViewModel.setLancamento(extratoDTO.getLancamento());
+//			extratoViewModel.setValor(extratoDTO.getValor());
+
+			return null;
+	
+		}
+		return null;
+	}
+
 
 	public static ContaCorrenteView fromContaCorrenteDto(APIDto dto) {
 		if (dto != null) {

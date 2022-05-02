@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.uati.api.model.APIDto;
 import br.com.uati.api.model.ContaCorrenteDTO;
+import br.com.uati.api.model.DadosExtratoDTO;
+import br.com.uati.api.model.DadosFuturosDTO;
 import br.com.uati.api.model.ExtratoDTO;
+import br.com.uati.api.model.ExtratosFuturosDTO;
 import br.com.uati.api.model.SaldoDTO;
 import br.com.uati.api.params.ContaCorrenteParams;
 import br.com.uati.api.params.ExtratoESaldoParams;
@@ -59,6 +62,38 @@ public class TesteServiceImpl implements TesteService {
 			throw new Exception ("Erro de API.");
 		}
 		return response.readEntity(ExtratoDTO.class);
+	}
+	
+	@Override
+	public APIDto getExtratoFuturo(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratosFuturosDTO.class);
+	}
+	
+	
+	// teste
+	@Override
+	public APIDto getExtratoFuturoTeste(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(DadosFuturosDTO.class);
 	}
 
 	@Override

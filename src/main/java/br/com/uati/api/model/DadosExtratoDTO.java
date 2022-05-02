@@ -1,18 +1,19 @@
 package br.com.uati.api.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DadosExtratoDTO {
-
+public class DadosExtratoDTO implements APIDto {
+	
+	@JsonProperty
 	private String dataLancamento;
 	
+	@JsonProperty
 	private String lancamento;
-
+	
+	@JsonProperty
 	private Double valor;
 	
+	@JsonProperty
 	private String detalhes;
 
 	public String getDataLancamento() {
@@ -46,6 +47,4 @@ public class DadosExtratoDTO {
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
 	}
-	
-	
 }

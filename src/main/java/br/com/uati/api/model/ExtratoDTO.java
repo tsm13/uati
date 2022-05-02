@@ -13,4 +13,8 @@ public class ExtratoDTO implements APIDto {
 	public List<DadosExtratoDTO> getDados() {
 		return dados;
 	}
+
+	public void setDados(List<DadosExtratoDTO> dados) {
+		this.dados = dados;
+	}
 }
