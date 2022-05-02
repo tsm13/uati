@@ -46,6 +46,11 @@ public class ClienteModelMapper {
 			ExtratosFuturosView extratoViewModel = new ExtratosFuturosView();
 			extratoViewModel.setDados(extratoDTO.getDados());	
 			
+			
+			// Retornar apenas um item da lista?
+			// E/ou como puxar as propriedades?
+			
+			
 			return extratoViewModel;
 		}
 		return null;
