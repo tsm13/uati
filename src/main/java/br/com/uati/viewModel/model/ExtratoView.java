@@ -7,13 +7,13 @@ import br.com.uati.api.model.DadosExtratoDTO;
 import br.com.uati.viewModel.ViewEntidade;
 
 public class ExtratoView implements ViewEntidade {
-	private List<DadosExtratoDTO> dados = new ArrayList<>();	
+	private List<DadosExtratoView> dados = new ArrayList<>();	
 	
-	public List<DadosExtratoDTO> getDados() {
+	public List<DadosExtratoView> getDados() {
 		return dados;
 	}
 	
-	public void setDados(List<DadosExtratoDTO> dados) {
+	public void setDados(List<DadosExtratoView> dados) {
 		this.dados = dados;
 	}	
 }

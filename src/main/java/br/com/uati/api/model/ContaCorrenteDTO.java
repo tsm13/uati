@@ -59,5 +59,4 @@ public class ContaCorrenteDTO implements APIDto {
 		this.sobrenome = sobrenome;
 	}
 	
-
 }

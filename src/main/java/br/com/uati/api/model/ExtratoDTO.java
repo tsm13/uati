@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.uati.viewModel.model.DadosExtratoView;
+
 public class ExtratoDTO implements APIDto {
 	
 	@JsonProperty("dados")		

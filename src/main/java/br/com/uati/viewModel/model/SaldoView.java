@@ -24,7 +24,7 @@ public class SaldoView implements ViewEntidade {
 	}
 
 	public Double getSaldoTotal() {
-		return saldoTotal;
+		return this.saldo + this.lis;
 	}
 
 	public void setSaldoTotal(Double saldoTotal) {

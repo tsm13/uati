@@ -10,9 +10,6 @@ public class SaldoDTO implements APIDto {
 	@JsonProperty("lis")
 	private Double lis;
 	
-	@JsonProperty("saldoTotal")
-	private Double saldoTotal;
-
 	public Double getSaldo() {
 		return saldo;
 	}
@@ -27,13 +24,5 @@ public class SaldoDTO implements APIDto {
 
 	public void setLis(Double lis) {
 		this.lis = lis;
-	}
-	
-	public Double getSaldoTotal() {
-		return this.saldo + this.lis;
-	}
-
-	public void setSaldoTotal(Double saldoTotal) {
-		this.saldoTotal = saldoTotal;
 	}
 }

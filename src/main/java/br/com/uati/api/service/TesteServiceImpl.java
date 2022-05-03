@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.uati.api.model.APIDto;
 import br.com.uati.api.model.ContaCorrenteDTO;
-import br.com.uati.api.model.DadosExtratoDTO;
-import br.com.uati.api.model.DadosFuturosDTO;
 import br.com.uati.api.model.ExtratoDTO;
-import br.com.uati.api.model.ExtratosFuturosDTO;
 import br.com.uati.api.model.SaldoDTO;
 import br.com.uati.api.params.ContaCorrenteParams;
 import br.com.uati.api.params.ExtratoESaldoParams;
@@ -33,6 +30,23 @@ public class TesteServiceImpl implements TesteService {
 		this.webTarget = webTarget;
 	}
 
+	// Conta Corrente
+	@Override
+	public APIDto getContaCorrente(ContaCorrenteParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaContaESenha(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_CC)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ContaCorrenteDTO.class);
+	}
+
+	// Saldo
 	@Override
 	public APIDto getSaldo(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
@@ -49,6 +63,7 @@ public class TesteServiceImpl implements TesteService {
 		return response.readEntity(SaldoDTO.class);
 	}
 	
+	// Extratos Geral
 	@Override
 	public APIDto getExtrato(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
@@ -64,8 +79,9 @@ public class TesteServiceImpl implements TesteService {
 		return response.readEntity(ExtratoDTO.class);
 	}
 	
+	// Extrato: Somente Entradas
 	@Override
-	public APIDto getExtratoFuturo(ExtratoESaldoParams params) throws Exception {
+	public APIDto getExtratoSomenteEntradas(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
 		verificacao.verificaConta(params);
 		Response response = this.webTarget
@@ -76,13 +92,28 @@ public class TesteServiceImpl implements TesteService {
 		if (response.getStatus() != HttpStatus.OK.value()) {
 			throw new Exception ("Erro de API.");
 		}
-		return response.readEntity(ExtratosFuturosDTO.class);
+		return response.readEntity(ExtratoDTO.class);
 	}
 	
-	
-	// teste
+	// Extrato: Entradas Passadas
 	@Override
-	public APIDto getExtratoFuturoTeste(ExtratoESaldoParams params) throws Exception {
+	public APIDto getExtratoEntradasPassadas(ExtratoESaldoParams params) throws Exception {
+			VerificacaoDados verificacao = new VerificacaoDados();
+			verificacao.verificaConta(params);
+			Response response = this.webTarget
+					.client()
+					.path(PATH_EXTRATO)
+					.request()
+					.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+			if (response.getStatus() != HttpStatus.OK.value()) {
+				throw new Exception ("Erro de API.");
+			}
+			return response.readEntity(ExtratoDTO.class);
+	}
+	
+	// Extrato: Entradas Futuras
+	@Override
+	public APIDto getExtratoEntradasFuturas(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
 		verificacao.verificaConta(params);
 		Response response = this.webTarget
@@ -93,21 +124,70 @@ public class TesteServiceImpl implements TesteService {
 		if (response.getStatus() != HttpStatus.OK.value()) {
 			throw new Exception ("Erro de API.");
 		}
-		return response.readEntity(DadosFuturosDTO.class);
+		return response.readEntity(ExtratoDTO.class);
+	}
+	
+	// Extrato: Somente Saídas
+	@Override
+	public APIDto getExtratoSomenteSaidas(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
 	}
 
+	// Extrato: Saidas Passadas
 	@Override
-	public APIDto getContaCorrente(ContaCorrenteParams params) throws Exception {
+	public APIDto getExtratoSaidasPassadas(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
-		verificacao.verificaContaESenha(params);
+		verificacao.verificaConta(params);
 		Response response = this.webTarget
 				.client()
-				.path(PATH_CC)
+				.path(PATH_EXTRATO)
 				.request()
 				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
 		if (response.getStatus() != HttpStatus.OK.value()) {
 			throw new Exception ("Erro de API.");
 		}
-		return response.readEntity(ContaCorrenteDTO.class);
+		return response.readEntity(ExtratoDTO.class);
+	}
+
+	// Extrato: Saidas Futuras
+	@Override
+	public APIDto getExtratoSaidasFuturas(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
+	}
+
+	// Extrato: Lançamentos Futuros
+	@Override
+	public APIDto getExtratoLancamentosFuturos(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
 	}
 }
