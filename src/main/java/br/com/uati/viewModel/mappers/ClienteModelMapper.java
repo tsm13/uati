@@ -1,5 +1,8 @@
 package br.com.uati.viewModel.mappers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import br.com.uati.api.model.APIDto;
 import br.com.uati.api.model.ContaCorrenteDTO;
 import br.com.uati.api.model.DadosExtratoDTO;
@@ -36,8 +39,7 @@ public class ClienteModelMapper {
 		if (dto != null) {
 			SaldoDTO saldoDTO = (SaldoDTO) dto;
 			SaldoView saldoViewModel = new SaldoView();
-			saldoViewModel.setSaldo(saldoDTO.getSaldo());
-			saldoViewModel.setLis(saldoDTO.getLis());
+			saldoViewModel.setSaldoTotal(saldoDTO.getSaldo() + saldoDTO.getLis());
 			return saldoViewModel;
 		}
 		return null;
@@ -205,6 +207,102 @@ public class ClienteModelMapper {
 				dadosExtratoView.setLancamento(dados.getLancamento());
 				dadosExtratoView.setValor(dados.getValor());
 				if (dadosExtratoView.getFuturoOuPassado() == StatusLancamento.FUTURO) {
+					extratoViewModel.getDados().add(dadosExtratoView);
+				}
+			}
+			return extratoViewModel;
+		}
+		return null;
+	}
+
+	// Extrato passado: Ontem
+	public static ExtratoView fromLancamentosOntem(APIDto dto) {
+		if (dto != null) {
+			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
+			ExtratoView extratoViewModel = new ExtratoView();
+
+			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
+				DadosExtratoView dadosExtratoView = new DadosExtratoView();
+				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
+				dadosExtratoView.setDetalhes(dados.getDetalhes());
+				dadosExtratoView.setLancamento(dados.getLancamento());
+				dadosExtratoView.setValor(dados.getValor());
+
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
+				if (dataFormatada.isEqual(LocalDate.now().minusDays(1))) {
+					extratoViewModel.getDados().add(dadosExtratoView);
+				}
+			}
+			return extratoViewModel;
+		}
+		return null;
+	}
+
+	// Extrato passado: 7 dias
+	public static ExtratoView fromLancamentos7Dias(APIDto dto) {
+		if (dto != null) {
+			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
+			ExtratoView extratoViewModel = new ExtratoView();
+
+			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
+				DadosExtratoView dadosExtratoView = new DadosExtratoView();
+				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
+				dadosExtratoView.setDetalhes(dados.getDetalhes());
+				dadosExtratoView.setLancamento(dados.getLancamento());
+				dadosExtratoView.setValor(dados.getValor());
+
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
+				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(8))) {
+					extratoViewModel.getDados().add(dadosExtratoView);
+				}
+			}
+			return extratoViewModel;
+		}
+		return null;
+	}
+
+	// Extrato passado: 30 dias
+	public static ExtratoView fromLancamentos30Dias(APIDto dto) {
+		if (dto != null) {
+			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
+			ExtratoView extratoViewModel = new ExtratoView();
+
+			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
+				DadosExtratoView dadosExtratoView = new DadosExtratoView();
+				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
+				dadosExtratoView.setDetalhes(dados.getDetalhes());
+				dadosExtratoView.setLancamento(dados.getLancamento());
+				dadosExtratoView.setValor(dados.getValor());
+
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
+				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(31))) {
+					extratoViewModel.getDados().add(dadosExtratoView);
+				}
+			}
+			return extratoViewModel;
+		}
+		return null;
+	}
+
+	// Extrato passado: 90 dias
+	public static ExtratoView fromLancamentos90Dias(APIDto dto) {
+		if (dto != null) {
+			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
+			ExtratoView extratoViewModel = new ExtratoView();
+
+			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
+				DadosExtratoView dadosExtratoView = new DadosExtratoView();
+				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
+				dadosExtratoView.setDetalhes(dados.getDetalhes());
+				dadosExtratoView.setLancamento(dados.getLancamento());
+				dadosExtratoView.setValor(dados.getValor());
+				
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
+				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(91))) {
 					extratoViewModel.getDados().add(dadosExtratoView);
 				}
 			}

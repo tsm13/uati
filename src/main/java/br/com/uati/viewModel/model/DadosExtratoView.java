@@ -13,9 +13,7 @@ public class DadosExtratoView {
 	private String lancamento;
 	private Double valor;
 	private String detalhes;
-	//@JsonIgnore 
 	private StatusLancamento futuroOuPassado;
-	//@JsonIgnore 
 	private StatusLancamento entradaOuSaida;
 	
 	public String getDataLancamento() {
@@ -42,6 +40,7 @@ public class DadosExtratoView {
 	public void setDetalhes(String detalhes) {
 		this.detalhes = detalhes;
 	}
+	
 	public StatusLancamento getFuturoOuPassado() {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate dataFormatada = LocalDate.parse(this.dataLancamento, formatador);

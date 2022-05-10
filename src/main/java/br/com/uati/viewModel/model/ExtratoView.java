@@ -2,8 +2,6 @@ package br.com.uati.viewModel.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import br.com.uati.api.model.DadosExtratoDTO;
 import br.com.uati.viewModel.ViewEntidade;
 
 public class ExtratoView implements ViewEntidade {

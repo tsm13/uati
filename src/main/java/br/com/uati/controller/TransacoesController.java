@@ -105,4 +105,40 @@ public class TransacoesController {
 		return ResponseEntity.ok()
 				.body(ClienteModelMapper.fromLancamentosFuturosDto(service.getExtratoEntradasFuturas(params)));
 	}
+	
+	// Extrato: Filtro de dias (ontem)
+	@ResponseBody
+	@PostMapping("/extratoLancamentosOntem")
+	public ResponseEntity<ViewEntidade> getLancamentosOntem(@RequestBody ExtratoESaldoParams params)
+			throws Exception {
+		return ResponseEntity.ok()
+				.body(ClienteModelMapper.fromLancamentosOntem(service.getExtratoEntradasFuturas(params)));
+	}
+	
+	// Extrato: Filtro de dias (7 dias)
+	@ResponseBody
+	@PostMapping("/extratoLancamentos7Dias")
+	public ResponseEntity<ViewEntidade> getLancamentos7Dias(@RequestBody ExtratoESaldoParams params)
+			throws Exception {
+		return ResponseEntity.ok()
+				.body(ClienteModelMapper.fromLancamentos7Dias(service.getExtratoEntradasFuturas(params)));
+	}
+	
+	// Extrato: Filtro de dias (30 dias)
+	@ResponseBody
+	@PostMapping("/extratoLancamentos30Dias")
+	public ResponseEntity<ViewEntidade> getLancamentos30Dias(@RequestBody ExtratoESaldoParams params)
+			throws Exception {
+		return ResponseEntity.ok()
+				.body(ClienteModelMapper.fromLancamentos30Dias(service.getExtratoEntradasFuturas(params)));
+	}
+	
+	// Extrato: Filtro de dias (90 dias)
+	@ResponseBody
+	@PostMapping("/extratoLancamentos90Dias")
+	public ResponseEntity<ViewEntidade> getLancamentos90Dias(@RequestBody ExtratoESaldoParams params)
+			throws Exception {
+		return ResponseEntity.ok()
+				.body(ClienteModelMapper.fromLancamentos90Dias(service.getExtratoEntradasFuturas(params)));
+	}
 }

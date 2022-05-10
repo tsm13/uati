@@ -190,4 +190,68 @@ public class TesteServiceImpl implements TesteService {
 		}
 		return response.readEntity(ExtratoDTO.class);
 	}
+
+	// Extrato: Lançamentos passados (ontem)
+	@Override
+	public APIDto getExtratoLancamentosOntem(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
+	}
+
+	// Extrato: Lançamentos passados (7 dias)
+	@Override
+	public APIDto getExtratoLancamentos7Dias(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
+	}
+
+	// Extrato: Lançamentos passados (30 dias)
+	@Override
+	public APIDto getExtratoLancamentos30Dias(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
+	}
+
+	// Extrato: Lançamentos passados (90 dias)
+	@Override
+	public APIDto getExtratoLancamentos90Dias(ExtratoESaldoParams params) throws Exception {
+		VerificacaoDados verificacao = new VerificacaoDados();
+		verificacao.verificaConta(params);
+		Response response = this.webTarget
+				.client()
+				.path(PATH_EXTRATO)
+				.request()
+				.post(Entity.entity(params, MediaType.APPLICATION_JSON_TYPE));
+		if (response.getStatus() != HttpStatus.OK.value()) {
+			throw new Exception ("Erro de API.");
+		}
+		return response.readEntity(ExtratoDTO.class);
+	}
 }
