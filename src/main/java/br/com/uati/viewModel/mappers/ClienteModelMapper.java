@@ -1,5 +1,6 @@
 package br.com.uati.viewModel.mappers;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -51,260 +52,35 @@ public class ClienteModelMapper {
 			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
 			ExtratoView extratoViewModel = new ExtratoView();
 
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			SimpleDateFormat formatadorFinal = new SimpleDateFormat("dd/MM/yyyy");
+
 			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
+
 				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
+				dadosExtratoView.setDataLancamento(simpleDateFormat.format(dados.getDataLancamento()));
+
+				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
+
+				dadosExtratoView.setDataLancamento(formatadorFinal.format(dados.getDataLancamento()));
 				dadosExtratoView.setDetalhes(dados.getDetalhes());
 				dadosExtratoView.setLancamento(dados.getLancamento());
 				dadosExtratoView.setValor(dados.getValor());
+
+				if (dataFormatada.isAfter(LocalDate.now())) {
+					dadosExtratoView.setFuturoOuPassado(StatusLancamento.FUTURO);
+				} else {
+					dadosExtratoView.setFuturoOuPassado(StatusLancamento.PASSADO);
+				}
+
+				if (dadosExtratoView.getValor() > 0) {
+					dadosExtratoView.setEntradaOuSaida(StatusLancamento.ENTRADA);
+				} else {
+					dadosExtratoView.setEntradaOuSaida(StatusLancamento.SAIDA);
+				}
+
 				extratoViewModel.getDados().add(dadosExtratoView);
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Somente Entradas (Passadas e Futuras)
-	public static ExtratoView fromExtratoSomenteEntradasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.ENTRADA) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Entradas Passadas
-	public static ExtratoView fromExtratoEntradasPassadasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.ENTRADA
-						&& dadosExtratoView.getFuturoOuPassado() == StatusLancamento.PASSADO) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Entradas Futuras
-	public static ExtratoView fromExtratoEntradasFuturasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.ENTRADA
-						&& dadosExtratoView.getFuturoOuPassado() == StatusLancamento.FUTURO) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Somente Saídas
-	public static ExtratoView fromExtratoSomenteSaidasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.SAIDA) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Saídas Passadas
-	public static ExtratoView fromExtratoSaidasPassadasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.SAIDA
-						&& dadosExtratoView.getFuturoOuPassado() == StatusLancamento.PASSADO) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Saídas Futuras
-	public static ExtratoView fromExtratoSaidasFuturasDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getEntradaOuSaida() == StatusLancamento.SAIDA
-						&& dadosExtratoView.getFuturoOuPassado() == StatusLancamento.FUTURO) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato: Lançamentos Futuros
-	public static ExtratoView fromLancamentosFuturosDto(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				if (dadosExtratoView.getFuturoOuPassado() == StatusLancamento.FUTURO) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato passado: Ontem
-	public static ExtratoView fromLancamentosOntem(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-
-				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
-				if (dataFormatada.isEqual(LocalDate.now().minusDays(1))) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato passado: 7 dias
-	public static ExtratoView fromLancamentos7Dias(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-
-				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
-				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(8))) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato passado: 30 dias
-	public static ExtratoView fromLancamentos30Dias(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-
-				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
-				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(31))) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
-			}
-			return extratoViewModel;
-		}
-		return null;
-	}
-
-	// Extrato passado: 90 dias
-	public static ExtratoView fromLancamentos90Dias(APIDto dto) {
-		if (dto != null) {
-			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
-			ExtratoView extratoViewModel = new ExtratoView();
-
-			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(dados.getDataLancamento());
-				dadosExtratoView.setDetalhes(dados.getDetalhes());
-				dadosExtratoView.setLancamento(dados.getLancamento());
-				dadosExtratoView.setValor(dados.getValor());
-				
-				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
-				if (dataFormatada.isBefore(LocalDate.now()) && dataFormatada.isAfter(LocalDate.now().minusDays(91))) {
-					extratoViewModel.getDados().add(dadosExtratoView);
-				}
 			}
 			return extratoViewModel;
 		}

@@ -1,9 +1,5 @@
 package br.com.uati.viewModel.model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.uati.api.model.StatusLancamento;
 
@@ -42,26 +38,35 @@ public class DadosExtratoView {
 	}
 	
 	public StatusLancamento getFuturoOuPassado() {
-		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate dataFormatada = LocalDate.parse(this.dataLancamento, formatador);
-		if (dataFormatada.isAfter(LocalDate.now())) {
-			return StatusLancamento.FUTURO;
-		}
-		return StatusLancamento.PASSADO;
+		return futuroOuPassado;
 	}
-	
 	public void setFuturoOuPassado(StatusLancamento futuroOuPassado) {
 		this.futuroOuPassado = futuroOuPassado;
 	}
 	
-	public StatusLancamento getEntradaOuSaida() {
-		if (this.valor > 0) {
-			return StatusLancamento.ENTRADA;
-		}
-		return StatusLancamento.SAIDA;
-	}
-	
 	public void setEntradaOuSaida(StatusLancamento entradaOuSaida) {
 		this.entradaOuSaida = entradaOuSaida;
-	}	
+	}
+	
+	public StatusLancamento getEntradaOuSaida() {
+		return entradaOuSaida;
+	}
+	
+	
+//	public StatusLancamento getFuturoOuPassado() {
+////		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+////		LocalDate dataFormatada = LocalDate.parse(this.dataLancamento, formatador);
+////		if (dataFormatada.isAfter(LocalDate.now())) {
+////			return StatusLancamento.FUTURO;
+////		}
+////		return StatusLancamento.PASSADO;
+//	}
+//	
+//	public StatusLancamento getEntradaOuSaida() {
+//		if (this.valor > 0) {
+//			return StatusLancamento.ENTRADA;
+//		}
+//		return StatusLancamento.SAIDA;
+//	}
+	
 }

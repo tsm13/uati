@@ -1,26 +1,30 @@
 package br.com.uati.api.model;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import br.com.uati.viewModel.model.SaldoView;
+
 public class DadosExtratoDTO implements APIDto {
-	
+
 	@JsonProperty
-	private String dataLancamento;
-	
+	private Date dataLancamento;
+
 	@JsonProperty
 	private String lancamento;
-	
+
 	@JsonProperty
 	private Double valor;
-	
+
 	@JsonProperty
 	private String detalhes;
 
-	public String getDataLancamento() {
+	public Date getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(String dataLancamento) {
+	public void setDataLancamento(Date dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 
