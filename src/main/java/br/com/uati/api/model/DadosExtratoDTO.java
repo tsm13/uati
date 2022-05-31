@@ -4,8 +4,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.uati.viewModel.model.SaldoView;
-
 public class DadosExtratoDTO implements APIDto {
 
 	@JsonProperty
