@@ -1,6 +1,5 @@
 package br.com.uati.viewModel.mappers;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -46,29 +45,22 @@ public class ClienteModelMapper {
 		return null;
 	}
 
-	// Extrato Geral
+	// Extrato
 	public static ExtratoView fromExtratoDto(APIDto dto) {
 		if (dto != null) {
 			ExtratoDTO extratoDTO = (ExtratoDTO) dto;
 			ExtratoView extratoViewModel = new ExtratoView();
-
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			SimpleDateFormat formatadorFinal = new SimpleDateFormat("dd/MM/yyyy");
+			DateTimeFormatter formatData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 			for (DadosExtratoDTO dados : extratoDTO.getDados()) {
-
 				DadosExtratoView dadosExtratoView = new DadosExtratoView();
-				dadosExtratoView.setDataLancamento(simpleDateFormat.format(dados.getDataLancamento()));
 
-				LocalDate dataFormatada = LocalDate.parse(dadosExtratoView.getDataLancamento(), formatador);
-
-				dadosExtratoView.setDataLancamento(formatadorFinal.format(dados.getDataLancamento()));
+				dadosExtratoView.setDataLancamento(formatData.format(dados.getDataLancamento()));
 				dadosExtratoView.setDetalhes(dados.getDetalhes());
 				dadosExtratoView.setLancamento(dados.getLancamento());
 				dadosExtratoView.setValor(dados.getValor());
 
-				if (dataFormatada.isAfter(LocalDate.now())) {
+				if (dados.getDataLancamento().isAfter(LocalDate.now())) {
 					dadosExtratoView.setFuturoOuPassado(StatusLancamento.FUTURO);
 				} else {
 					dadosExtratoView.setFuturoOuPassado(StatusLancamento.PASSADO);

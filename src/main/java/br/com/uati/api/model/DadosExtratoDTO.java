@@ -1,13 +1,13 @@
 package br.com.uati.api.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DadosExtratoDTO implements APIDto {
 
 	@JsonProperty
-	private Date dataLancamento;
+	private LocalDate dataLancamento;
 
 	@JsonProperty
 	private String lancamento;
@@ -18,11 +18,11 @@ public class DadosExtratoDTO implements APIDto {
 	@JsonProperty
 	private String detalhes;
 
-	public Date getDataLancamento() {
+	public LocalDate getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(Date dataLancamento) {
+	public void setDataLancamento(LocalDate dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 

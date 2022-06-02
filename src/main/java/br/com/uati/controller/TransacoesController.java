@@ -34,7 +34,7 @@ public class TransacoesController {
 		return ResponseEntity.ok().body(ClienteModelMapper.fromSaldoDto(service.getSaldo(params)));
 	}
 
-	// Extrato: Geral
+	// Extrato
 	@ResponseBody
 	@PostMapping("/extrato")
 	public ResponseEntity<ViewEntidade> getExtrato(@RequestBody ExtratoESaldoParams params) throws Exception {

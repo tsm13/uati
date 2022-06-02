@@ -9,6 +9,7 @@ public class ContaCorrenteView implements ViewEntidade {
 	private String dac;
 	private String nome;
 	private String sobrenome;
+	
 	public String getAgencia() {
 		return agencia;
 	}

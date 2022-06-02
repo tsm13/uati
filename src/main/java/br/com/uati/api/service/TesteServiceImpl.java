@@ -63,7 +63,7 @@ public class TesteServiceImpl implements TesteService {
 		return response.readEntity(SaldoDTO.class);
 	}
 	
-	// Extratos Geral
+	// Extrato
 	@Override
 	public APIDto getExtrato(ExtratoESaldoParams params) throws Exception {
 		VerificacaoDados verificacao = new VerificacaoDados();
